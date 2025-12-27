@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp") version "2.0.21-1.0.28"
+    id("com.google.dagger.hilt.android") version "2.51.1"
 }
 
 android {
@@ -57,4 +59,17 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+
+    // Navigation & Image
+    implementation(libs.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.kotlinx.serialization.json)
 }
