@@ -14,6 +14,8 @@ coil = "2.6.0"
 navigationCompose = "2.8.5"
 serialization = "1.6.3"
 ksp = "2.0.21-1.0.25"
+okhttp = "4.12.0"
+retrofitKotlinxSerialization = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +47,13 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 
 # Serialization (for complex objects in Navigation)
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+
+# OkHttp & Logging
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+# Serialization Converter for Retrofit (Vital for the new NetworkModule)
+retrofit-kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerialization" }
 
 [plugins]
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
