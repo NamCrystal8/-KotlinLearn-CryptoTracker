@@ -11,6 +11,6 @@ class GetCoinUseCase @Inject constructor(
 
 ) {
     operator fun invoke(): Flow<Resource<List<Coin>>> {
-     return repository.getCoins()
+        return repository.getCoins()
     }
 }

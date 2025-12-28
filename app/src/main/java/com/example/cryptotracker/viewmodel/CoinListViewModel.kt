@@ -1,5 +1,6 @@
 package com.example.cryptotracker.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptotracker.domain.use_case.GetCoinUseCase
@@ -23,17 +24,35 @@ class CoinListViewModel @Inject constructor(
         getCoins()
     }
 
+    fun onRefresh() {
+        getCoins()
+    }
+
     private fun getCoins() {
         getCoinUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = CoinListState(coins = result.data ?: emptyList(), isLoading = false)
+                    val coins = result.data ?: emptyList()
+                    Log.d("ViewModel", "✅ Success! Loaded ${coins.size} coins.")
+                    _state.value = CoinListState(
+                        coins = coins,
+                        isLoading = false
+                    )
                 }
+
                 is Resource.Error -> {
-                    _state.value = CoinListState(error = result.message ?: "An unexpected error occurred", isLoading = false)
+                    Log.e("ViewModel", "❌ Error: ${result.message}")
+                    _state.value = CoinListState(
+                        error = result.message ?: "Unknown Error",
+                        isLoading = false
+                    )
                 }
+
                 is Resource.Loading -> {
-                    _state.value = CoinListState(isLoading = true)
+                    _state.value = _state.value.copy(
+                        isLoading = result.isLoading
+                    )
+                    Log.d("ViewModel", "Loading state updated to: ${result.isLoading}")
                 }
             }
         }.launchIn(viewModelScope)

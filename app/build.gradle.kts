@@ -6,9 +6,10 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") version "2.0.21-1.0.28"
     id("com.google.dagger.hilt.android") version "2.51.1"
+    alias(libs.plugins.kotlin.serialization)
 }
 
-val geckoApi= gradleLocalProperties(rootDir, providers).getProperty("COINGECKO_API_KEY", "")
+val geckoApi = gradleLocalProperties(rootDir, providers).getProperty("COINGECKO_API_KEY", "")
 
 android {
     namespace = "com.example.cryptotracker"
@@ -74,7 +75,7 @@ dependencies {
 
     // Network
     implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.kotlinx.serialization)
 
     // Navigation & Image
     implementation(libs.navigation.compose)

@@ -9,6 +9,6 @@ data class CryptoDto(
     val symbol: String,
     val name: String,
     @SerialName("image") val imageUrl: String,
-    @SerialName("current_price") val currentPrice: Double,
-    @SerialName("price_change_percentage_24h") val priceChangePercentage24h: Double
+    @SerialName("current_price") val currentPrice: Double? = null,
+    @SerialName("price_change_percentage_24h") val priceChangePercentage24h: Double? = null
 )

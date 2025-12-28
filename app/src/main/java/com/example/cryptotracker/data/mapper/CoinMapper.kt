@@ -8,8 +8,9 @@ fun CryptoDto.toCoin(): Coin {
         id = id,
         name = name,
         symbol = symbol.uppercase(),
-        price = currentPrice,
-        change24h = priceChangePercentage24h,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        // If API sends null, default to 0.0
+        price = currentPrice ?: 0.0,
+        change24h = priceChangePercentage24h ?: 0.0
     )
 }
