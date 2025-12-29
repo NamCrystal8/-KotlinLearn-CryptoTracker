@@ -18,14 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cryptotracker.domain.model.Coin
 import com.example.cryptotracker.ui.coin_screen.components.CoinListItem
 import com.example.cryptotracker.ui.coin_screen.components.CoinListItemSkeleton
-import com.example.cryptotracker.viewmodel.CoinListViewModel
+import com.example.cryptotracker.viewmodel.coin_list.CoinListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoinListScreen(
-    viewModel: CoinListViewModel = hiltViewModel()
+    viewModel: CoinListViewModel = hiltViewModel(),
+    onCoinClick: (Coin) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -50,7 +52,7 @@ fun CoinListScreen(
                     items(state.coins) { coin ->
                         CoinListItem(
                             coin = coin,
-                            onItemClick = {}
+                            onItemClick = { onCoinClick(coin) }
                         )
                     }
                 }

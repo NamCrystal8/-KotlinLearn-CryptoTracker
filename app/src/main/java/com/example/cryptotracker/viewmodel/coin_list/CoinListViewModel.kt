@@ -1,4 +1,4 @@
-package com.example.cryptotracker.viewmodel
+package com.example.cryptotracker.viewmodel.coin_list
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

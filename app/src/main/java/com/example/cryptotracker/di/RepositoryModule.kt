@@ -2,6 +2,7 @@ package com.example.cryptotracker.di
 
 import com.example.cryptotracker.data.repository.CryptoRepositoryImpl
 import com.example.cryptotracker.domain.repository.CoinRepository
+
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
