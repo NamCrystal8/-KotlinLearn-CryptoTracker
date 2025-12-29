@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptotracker.domain.use_case.GetCoinDetailUseCase
+import com.example.cryptotracker.domain.use_case.GetCoinMarketChartUseCase
 import com.example.cryptotracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CoinDetailViewModel @Inject constructor(
     private val getCoinDetailUseCase: GetCoinDetailUseCase,
+    private val getCoinMarketChartUseCase: GetCoinMarketChartUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _state = MutableStateFlow(CoinDetailState())
@@ -36,16 +38,33 @@ class CoinDetailViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+
                 is Resource.Error -> {
                     _state.value = _state.value.copy(
                         error = result.message ?: "Unknown Error",
                         isLoading = false
                     )
                 }
+
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(
                         isLoading = result.isLoading
                     )
+                }
+            }
+        }.launchIn(viewModelScope)
+        getCoinMarketChartUseCase(coinId).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = _state.value.copy(
+                        chartData = result.data ?: emptyList()
+                    )
+                }
+
+                is Resource.Error -> {
+                }
+
+                is Resource.Loading -> {
                 }
             }
         }.launchIn(viewModelScope)

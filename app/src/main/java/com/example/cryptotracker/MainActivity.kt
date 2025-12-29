@@ -27,7 +27,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost(navController = navController,
+                    NavHost(
+                        navController = navController,
                         startDestination = Screen.CoinList
                     ) {
                         composable<Screen.CoinList> {

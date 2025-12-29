@@ -2,10 +2,12 @@ package com.example.cryptotracker.data.repository
 
 import com.example.cryptotracker.data.mapper.toCoin
 import com.example.cryptotracker.data.mapper.toCoinDetail
+import com.example.cryptotracker.data.mapper.toCoinPrices
 import com.example.cryptotracker.data.remote.CoinGeckoApi
 import com.example.cryptotracker.data.utils.safeApiCall
 import com.example.cryptotracker.domain.model.Coin
 import com.example.cryptotracker.domain.model.CoinDetail
+import com.example.cryptotracker.domain.model.CoinPrice
 import com.example.cryptotracker.domain.repository.CoinRepository
 import com.example.cryptotracker.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +28,13 @@ class CryptoRepositoryImpl @Inject constructor(
         return safeApiCall(
             apiCall = { api.getCoinDetail(coinId) },
             mapper = { dto -> dto.toCoinDetail() }
+        )
+    }
+
+    override fun getCoinMarketChart(coinId: String): Flow<Resource<List<CoinPrice>>> {
+        return safeApiCall(
+            apiCall = { api.getMarketChart(coinId) },
+            mapper = { dto -> dto.toCoinPrices() }
         )
     }
 }

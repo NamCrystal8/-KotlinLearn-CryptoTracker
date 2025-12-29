@@ -52,7 +52,7 @@ fun CoinListScreen(
                     items(state.coins) { coin ->
                         CoinListItem(
                             coin = coin,
-                            onItemClick = {onCoinClick(coin)}
+                            onItemClick = { onCoinClick(coin) }
                         )
                     }
                 }
