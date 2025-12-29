@@ -1,4 +1,4 @@
-package com.example.cryptotracker.viewmodel
+package com.example.cryptotracker.viewmodel.coin_list
 
 import com.example.cryptotracker.domain.model.Coin
 

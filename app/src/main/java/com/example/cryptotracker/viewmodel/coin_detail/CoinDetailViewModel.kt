@@ -1,9 +1,9 @@
-package com.example.cryptotracker.viewmodel
+package com.example.cryptotracker.viewmodel.coin_detail
 
-import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cryptotracker.domain.use_case.GetCoinUseCase
+import com.example.cryptotracker.domain.use_case.GetCoinDetailUseCase
 import com.example.cryptotracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,49 +14,40 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class CoinListViewModel @Inject constructor(
-    private val getCoinUseCase: GetCoinUseCase
+class CoinDetailViewModel @Inject constructor(
+    private val getCoinDetailUseCase: GetCoinDetailUseCase,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _state = MutableStateFlow(CoinListState())
-    val state: StateFlow<CoinListState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(CoinDetailState())
+    val state: StateFlow<CoinDetailState> = _state.asStateFlow()
 
     init {
-        getCoins()
+        savedStateHandle.get<String>("coinId")?.let { coinId ->
+            getCoinDetail(coinId)
+        }
     }
 
-    fun onRefresh() {
-        getCoins()
-    }
-
-    private fun getCoins() {
-        getCoinUseCase().onEach { result ->
+    private fun getCoinDetail(coinId: String) {
+        getCoinDetailUseCase(coinId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    val coins = result.data ?: emptyList()
-                    Log.d("ViewModel", "✅ Success! Loaded ${coins.size} coins.")
-                    _state.value = CoinListState(
-                        coins = coins,
+                    _state.value = _state.value.copy(
+                        coin = result.data,
                         isLoading = false
                     )
                 }
-
                 is Resource.Error -> {
-                    Log.e("ViewModel", "❌ Error: ${result.message}")
-                    _state.value = CoinListState(
+                    _state.value = _state.value.copy(
                         error = result.message ?: "Unknown Error",
                         isLoading = false
                     )
                 }
-
                 is Resource.Loading -> {
                     _state.value = _state.value.copy(
                         isLoading = result.isLoading
                     )
-                    Log.d("ViewModel", "Loading state updated to: ${result.isLoading}")
                 }
             }
         }.launchIn(viewModelScope)
     }
-
-
 }
