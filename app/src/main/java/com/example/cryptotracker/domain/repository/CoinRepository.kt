@@ -12,4 +12,6 @@ interface CoinRepository {
     fun getCoinById(coinId: String): Flow<Resource<CoinDetail>>
 
     fun getCoinMarketChart(coinId: String): Flow<Resource<List<CoinPrice>>>
+
+    fun getCoins(query: String? = null, page: Int = 1): Flow<Resource<List<Coin>>>
 }

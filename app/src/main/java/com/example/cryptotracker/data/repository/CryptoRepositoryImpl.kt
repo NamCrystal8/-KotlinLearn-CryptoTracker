@@ -37,4 +37,26 @@ class CryptoRepositoryImpl @Inject constructor(
             mapper = { dto -> dto.toCoinPrices() }
         )
     }
+
+    override fun getCoins(query: String?, page: Int): Flow<Resource<List<Coin>>> {
+        return safeApiCall(
+            apiCall = {
+                if (query.isNullOrBlank()) {
+                    api.getCoins(page = page)
+                } else {
+                    val searchResult = api.searchCoins(query)
+
+                    if (searchResult.coins.isEmpty()) {
+                        emptyList()
+                    } else {
+                        val commaSeparatedIds = searchResult.coins
+                            .take(10) // Limit to top 10 matches
+                            .joinToString(",") { it.id }
+                        api.getCoins(ids = commaSeparatedIds)
+                    }
+                }
+            },
+            mapper = { dtos -> dtos.map { it.toCoin() } }
+        )
+    }
 }

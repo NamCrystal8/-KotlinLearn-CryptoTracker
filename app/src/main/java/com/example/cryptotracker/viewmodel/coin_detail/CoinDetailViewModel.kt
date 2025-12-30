@@ -7,6 +7,7 @@ import com.example.cryptotracker.domain.use_case.GetCoinDetailUseCase
 import com.example.cryptotracker.domain.use_case.GetCoinMarketChartUseCase
 import com.example.cryptotracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
