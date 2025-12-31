@@ -7,8 +7,6 @@ import com.example.cryptotracker.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface CoinRepository {
-    fun getCoins(): Flow<Resource<List<Coin>>>
-
     fun getCoinById(coinId: String): Flow<Resource<CoinDetail>>
 
     fun getCoinMarketChart(coinId: String): Flow<Resource<List<CoinPrice>>>

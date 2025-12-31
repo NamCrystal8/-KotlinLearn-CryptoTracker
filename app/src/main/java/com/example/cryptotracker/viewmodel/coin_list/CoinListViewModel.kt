@@ -3,6 +3,7 @@ package com.example.cryptotracker.viewmodel.coin_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptotracker.domain.use_case.GetCoinUseCase
+import com.example.cryptotracker.utils.Constants
 import com.example.cryptotracker.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -40,7 +41,7 @@ class CoinListViewModel @Inject constructor(
     fun onSearch(query: String) {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            delay(500L)
+            delay(Constants.SEARCH_DEBOUNCE_MS)
             currentQuery = query
             _state.value = CoinListState(isLoading = true)
             getCoins(query = query)

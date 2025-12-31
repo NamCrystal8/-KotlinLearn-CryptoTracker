@@ -65,7 +65,7 @@ fun CoinListItem(
                 fontWeight = FontWeight.Bold
             )
 
-            val changeColor = if (coin.change24h < 0) Color.Red else Color.Green
+            val changeColor = if (coin.change24h != null && coin.change24h < 0) Color.Red else Color.Green
             Text(
                 text = "${coin.change24h}%",
                 style = MaterialTheme.typography.bodySmall,

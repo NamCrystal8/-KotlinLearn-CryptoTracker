@@ -58,14 +58,19 @@ class CoinDetailViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     _state.value = _state.value.copy(
-                        chartData = result.data ?: emptyList()
+                        chartData = result.data ?: emptyList(),
+                        chartError = null
                     )
                 }
 
                 is Resource.Error -> {
+                    _state.value = _state.value.copy(
+                        chartError = result.message ?: "Failed to load chart data"
+                    )
                 }
 
                 is Resource.Loading -> {
+                    // Chart loading is secondary, don't affect main loading state
                 }
             }
         }.launchIn(viewModelScope)

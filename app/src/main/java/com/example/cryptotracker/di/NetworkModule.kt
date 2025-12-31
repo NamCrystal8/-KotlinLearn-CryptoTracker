@@ -2,6 +2,7 @@ package com.example.cryptotracker.di
 
 import com.example.cryptotracker.BuildConfig
 import com.example.cryptotracker.data.remote.CoinGeckoApi
+import com.example.cryptotracker.utils.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -56,7 +57,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(json: Json, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/api/v3/")
+            .baseUrl(Constants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()

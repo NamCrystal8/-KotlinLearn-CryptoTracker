@@ -7,5 +7,6 @@ data class CoinDetailState(
     val isLoading: Boolean = false,
     val coin: CoinDetail? = null,
     val chartData: List<CoinPrice> = emptyList(),
-    val error: String = ""
+    val error: String = "",
+    val chartError: String? = null
 )
