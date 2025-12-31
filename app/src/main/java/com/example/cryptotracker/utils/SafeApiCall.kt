@@ -1,4 +1,4 @@
-package com.example.cryptotracker.data.utils
+package com.example.cryptotracker.utils
 
 import com.example.cryptotracker.utils.Resource
 import kotlinx.coroutines.flow.Flow

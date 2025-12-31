@@ -5,5 +5,7 @@ import com.example.cryptotracker.domain.model.Coin
 data class CoinListState(
     val isLoading: Boolean = false,
     val coins: List<Coin> = emptyList(),
-    val error: String = ""
+    val error: String = "",
+    val page: Int = 1,
+    val endReached: Boolean = false
 )
